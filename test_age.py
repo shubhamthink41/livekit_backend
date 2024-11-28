@@ -102,7 +102,7 @@ engagement_phrases = [
 class TranscriptLogger(logging.Handler):
     def is_engaging_with_character(self, user_input, character_names):
         user_input = user_input.lower()
-
+        
         for phrase in engagement_phrases:
             if fuzz.partial_ratio(user_input, phrase) > 70:
                 for character_name in character_names:
@@ -114,11 +114,10 @@ class TranscriptLogger(logging.Handler):
         if hasattr(record, 'user_transcript'):
             user_transcript = record.user_transcript
             logger.info(f"TranscriptLogger running.........{CHARACTER_NAMES}")
-
+            
             if CHARACTER_NAMES:
-                character = self.is_engaging_with_character(
-                    user_transcript, CHARACTER_NAMES)
-
+                character = self.is_engaging_with_character(user_transcript, CHARACTER_NAMES)
+                
                 if character:
                     name = voices[character]
                     logger.info(f"voice active is {name}")

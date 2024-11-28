@@ -4,3 +4,4 @@ livekit-plugins-deepgram>=0.6.9
 livekit-plugins-silero>=0.7.3
 python-dotenv~=1.0
 aiohttp
+fuzzywuzzy

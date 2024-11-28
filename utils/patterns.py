@@ -1,82 +1,82 @@
 import re
 
 
-CHARACTER_NAMES = ["emma wilson", "emma", "host",
-                   "jane porter", "jane", "michael brooks", "michael"]
+# CHARACTER_NAMES = ["emma wilson", "emma", "host",
+#                    "jane porter", "jane", "michael brooks", "michael"]
 
 
-def get_character_switch_patterns(char_name):
-    """
-    Generate comprehensive regex patterns for switching to a character
+# def get_character_switch_patterns(char_name):
+#     """
+#     Generate comprehensive regex patterns for switching to a character
 
-    Args:
-        char_name (str): Name of the character to match
+#     Args:
+#         char_name (str): Name of the character to match
 
-    Returns:
-        str: Regex pattern for character switch
-    """
-    patterns = [
-        # Direct requests
-        fr"(okay I want talk to {re.escape(char_name)}|"
-        fr"i want to {re.escape(char_name)}|"
+#     Returns:
+#         str: Regex pattern for character switch
+#     """
+#     patterns = [
+#         # Direct requests
+#         fr"(okay I want talk to {re.escape(char_name)}|"
+#         fr"i want to {re.escape(char_name)}|"
 
-        # Conversational variations
-        fr"can you switch to {re.escape(char_name)}|"
-        fr"change to {re.escape(char_name)}|"
-        fr"let me talk to {re.escape(char_name)}|"
+#         # Conversational variations
+#         fr"can you switch to {re.escape(char_name)}|"
+#         fr"change to {re.escape(char_name)}|"
+#         fr"let me talk to {re.escape(char_name)}|"
 
-        # Polite requests
-        fr"would you mind changing to {re.escape(char_name)}?|"
-        fr"could you switch to {re.escape(char_name)}|"
+#         # Polite requests
+#         fr"would you mind changing to {re.escape(char_name)}?|"
+#         fr"could you switch to {re.escape(char_name)}|"
 
-        # Excited or emphatic requests
-        fr"hey, I really want to talk to {re.escape(char_name)}!|"
-        fr"switch now to {re.escape(char_name)}!|"
+#         # Excited or emphatic requests
+#         fr"hey, I really want to talk to {re.escape(char_name)}!|"
+#         fr"switch now to {re.escape(char_name)}!|"
 
-        # Contextual requests
-        fr"bring out {re.escape(char_name)}|"
-        fr"activate {re.escape(char_name)}|"
-        fr"i'd like to speak with {re.escape(char_name)}|"
+#         # Contextual requests
+#         fr"bring out {re.escape(char_name)}|"
+#         fr"activate {re.escape(char_name)}|"
+#         fr"i'd like to speak with {re.escape(char_name)}|"
 
-        # Casual conversational
-        fr"yo, {re.escape(char_name)}|"
-        fr"hey {re.escape(char_name)}|"
+#         # Casual conversational
+#         fr"yo, {re.escape(char_name)}|"
+#         fr"hey {re.escape(char_name)}|"
 
-        # With additional context
-        fr"can we have {re.escape(char_name)} take over|"
-        fr"time for {re.escape(char_name)} to jump in)"
-    ]
+#         # With additional context
+#         fr"can we have {re.escape(char_name)} take over|"
+#         fr"time for {re.escape(char_name)} to jump in)"
+#     ]
 
-    return '|'.join(patterns)
-
-
-def get_character_voice_map():
-    """
-    Map characters to specific voices.
-
-    Returns:
-        dict: Mapping of character names to TTS voices.
-    """
-    return {
-        "emma wilson": "alloy",
-        "emma": "alloy",
-        "host": "echo",
-        "jane porter": "shimmer",
-        "jane": "shimmer",
-        "michael brooks": "onyx",
-        "michael": "onyx"
-    }
+#     return '|'.join(patterns)
 
 
-voices = {
-    "emma wilson": "alloy",
-    "emma": "alloy",
-    "host": "echo",
-    "jane porter": "Shimmer",
-    "jane": "Shimmer",
-    "michael brooks": "onyx",
-    "michael": "onyx"
-}
+# def get_character_voice_map():
+#     """
+#     Map characters to specific voices.
+
+#     Returns:
+#         dict: Mapping of character names to TTS voices.
+#     """
+#     return {
+#         "emma wilson": "alloy",
+#         "emma": "alloy",
+#         "host": "echo",
+#         "jane porter": "shimmer",
+#         "jane": "shimmer",
+#         "michael brooks": "onyx",
+#         "michael": "onyx"
+#     }
+
+
+# voices = {
+#     "emma wilson": "alloy",
+#     "emma": "alloy",
+#     "host": "echo",
+#     "jane porter": "Shimmer",
+#     "jane": "Shimmer",
+#     "michael brooks": "onyx",
+#     "michael": "onyx"
+# }
 
 def extract_character_data(story_json):
 
