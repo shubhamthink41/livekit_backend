@@ -24,7 +24,7 @@ load_dotenv(dotenv_path=".env.local")
 logger = logging.getLogger("voice-agent")
 
 
-LK_prompt = ""
+LK_prompt =""
 
 
 def prewarm(proc: JobProcess):
@@ -38,17 +38,19 @@ CHARACTER_NAMES = ["alloy"]
 
 
 async def initialize():
-    global CHARACTER_NAMES, voices
+    global CHARACTER_NAMES, voices, LK_prompt
 
-    LK_prompt = await fetch_prompt()
+    GET_LK_prompt = await fetch_prompt()
+    LK_prompt = GET_LK_prompt['story']
+    print(f"LK_prompt {LK_prompt}")
+
 
     try:
-        story_data = json.loads(LK_prompt) if isinstance(
+        # story_data = json.loads(GET_LK_prompt) if isinstance(
+        #     GET_LK_prompt, str) else GET_LK_prompt
+        
+        story_json = json.loads(LK_prompt) if isinstance(
             LK_prompt, str) else LK_prompt
-
-        story_json = json.loads(story_data['story']) if isinstance(
-            story_data['story'], str) else story_data['story']
-
         CHARACTER_NAMES, voices = extract_character_data(story_json)
         print("CHARACTER_NAMES =", CHARACTER_NAMES)
         print("voices =", voices)
@@ -59,7 +61,6 @@ async def initialize():
         voices = {}
 
 
-# Add engagement phrases at the top of the file with other constants
 engagement_phrases = [
     "hey",
     "hi",
@@ -156,6 +157,8 @@ async def entrypoint(ctx: JobContext):
         role='system',
         text=LK_prompt
     )
+    # print(f"initial_ctx {initial_ctx}")
+
 
     logger.info(f"connecting to room {ctx.room.name}")
     await ctx.connect(auto_subscribe=AutoSubscribe.AUDIO_ONLY)
@@ -176,20 +179,20 @@ async def entrypoint(ctx: JobContext):
     )
 
     assistant.start(ctx.room, participant)
-    chat = rtc.ChatManager(ctx.room)
+    # chat = rtc.ChatManager(ctx.room)
 
-    async def answer_from_text(txt: str):
-        chat_ctx = assistant.chat_ctx.copy()
-        chat_ctx.append(role="user", text=txt)
-        logger.info("Asking suggestions")
-        stream = assistant.llm.chat(chat_ctx=chat_ctx)
-        await assistant.say(stream)
+    # async def answer_from_text(txt: str):
+    #     chat_ctx = assistant.chat_ctx.copy()
+    #     chat_ctx.append(role="user", text=txt)
+    #     logger.info("Asking suggestions")
+    #     stream = assistant.llm.chat(chat_ctx=chat_ctx)
+    #     await assistant.say(stream)
 
-    @chat.on("message_received")
-    def on_chat_received(msg: rtc.ChatMessage):
-        assistant._interrupt_if_possible()
-        if msg.message:
-            asyncio.create_task(answer_from_text(msg.message))
+    # @chat.on("message_received")
+    # def on_chat_received(msg: rtc.ChatMessage):
+    #     assistant._interrupt_if_possible()
+    #     if msg.message:
+    #         asyncio.create_task(answer_from_text(msg.message))
 
     await assistant.say("Hey, Ready detective?", allow_interruptions=True)
 
